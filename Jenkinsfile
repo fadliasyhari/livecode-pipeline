@@ -1,8 +1,8 @@
 pipeline {
     agent any
     environment {
-        GIT_URL = 'https://github.com/fadliasyhari/docker-simple-go.git'
-        BRANCH = 'tes-pipeline'
+        GIT_URL = 'https://github.com/fadliasyhari/livecode-pipeline.git'
+        BRANCH = 'main'
         IMAGE = 'my-golang-test'
         CONTAINER = 'my-golang-test-app'
         DOCKER_APP = 'docker'
