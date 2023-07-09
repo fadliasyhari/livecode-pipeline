@@ -8,10 +8,10 @@ pipeline {
         DOCKER_APP = 'docker'
         DB_HOST = 'product-db'
         DB_USER = 'postgres'
-        DB_NAME = 'postgres'
-        DB_PASS = 'P@ssw0rd'
-        DB_PORT = '5434'
-        API_PORT = '8183'
+        DB_NAME = 'book_manaegement_system'
+        DB_PASS = 'password'
+        DB_PORT = '5432'
+        API_PORT = '8000'
         JOB_NAME = 'livecode-pipeline'
 
     }
@@ -39,11 +39,17 @@ pipeline {
     }
     post {
         always {
-            echo 'This will always run'
+            emailext to: "asyharifadli@gmail.com",
+            subject: "Livecode Pipeline Notification",
+            body: "Pipeline ${env.JOB_NAME} running with ${env.GIT_COMMIT}",
+            attachLog: true
+            slackSend botUser: true, 
+            channel: 'general',
+            message: "Pipeline ${env.JOB_NAME} running with ${env.GIT_COMMIT}", 
+            tokenCredentialId: 'Slack OAUTH'
         }
         success {
             echo 'This will run only if successful'
-            slackSend(channel: '#training', message: "Build deployed successfully - ${JOB_NAME} ${BUILD_NUMBER} (<${BUILD_URL}|Open>)")
         }
         failure {
             echo 'This will run only if failed'
